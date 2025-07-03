@@ -4,7 +4,8 @@ extends CharacterBody2D
 const SPEED = 150.0
 const JUMP_VELOCITY = -300.0
 
-@onready var animated_sprite = $AnimatedSprite2D
+@onready var animated_sprite = $Node2D/CharacterAnimation
+
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -19,6 +20,11 @@ func _physics_process(delta: float) -> void:
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	#-1, 0, 0
 	var direction := Input.get_axis("move_left", "move_right")
+	
+	#Toggle shield visibility
+	if Input.is_action_pressed("left_click", true):
+		$Node2D/Shield.visible = false
+	else: $Node2D/Shield.visible = true
 	
 	#flip
 	if direction > 0:
@@ -35,7 +41,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		animated_sprite.play("jump")
 	
-	
+	#move the player
 	if direction:
 		velocity.x = direction * SPEED
 	else:
