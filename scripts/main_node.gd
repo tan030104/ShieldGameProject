@@ -9,7 +9,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-	
+
+# Called when there a input event
 func _input(event):
 	#When left clicked
 	#if Input.is_action_just_pressed("left_click"):

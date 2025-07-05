@@ -6,6 +6,8 @@ const JUMP_VELOCITY = -300.0
 
 @onready var animated_sprite = $Node2D/CharacterAnimation
 
+func _process(delta: float) -> void:
+	pass
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
