@@ -21,8 +21,4 @@ zoom = Vector2(2.9, 3)
 [node name="Shield" parent="." instance=ExtResource("4_8m825")]
 position = Vector2(58, -13)
 
-[node name="Timer" type="Timer" parent="Shield"]
-wait_time = 3.0
-
 [connection signal="shield_throw" from="Shield" to="." method="_on_shield_shield_throw"]
-[connection signal="timeout" from="Shield/Timer" to="." method="_on_timer_timeout"]
