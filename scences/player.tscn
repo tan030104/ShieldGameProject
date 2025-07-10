@@ -1,8 +1,7 @@
-[gd_scene load_steps=29 format=3 uid="uid://bjf3j02yshb1p"]
+[gd_scene load_steps=28 format=3 uid="uid://bjf3j02yshb1p"]
 
 [ext_resource type="Script" uid="uid://baj2ggo4en43f" path="res://scripts/player_moverment.gd" id="1_3j5lm"]
 [ext_resource type="Texture2D" uid="uid://bq28hb424i115" path="res://assets/sprites/knight.png" id="2_efpdg"]
-[ext_resource type="Texture2D" uid="uid://pnm4mk028gmx" path="res://assets/sprites/shield.png" id="3_efpdg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u4p4d"]
 atlas = ExtResource("2_efpdg")
@@ -194,17 +193,13 @@ script = ExtResource("1_3j5lm")
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="CharacterAnimation" type="AnimatedSprite2D" parent="Node2D"]
-position = Vector2(-16, -21)
+position = Vector2(-16, -22)
 sprite_frames = SubResource("SpriteFrames_mwok8")
 animation = &"run"
 autoplay = "idle"
 frame_progress = 0.581853
 centered = false
 offset = Vector2(1, 0)
-
-[node name="Shield" type="Sprite2D" parent="Node2D"]
-scale = Vector2(0.105, 0.1)
-texture = ExtResource("3_efpdg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_3j5lm")
