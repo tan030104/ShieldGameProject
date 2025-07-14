@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjml4k0unhiad"]
+
+[ext_resource type="Texture2D" uid="uid://d15ohjgnni4ai" path="res://assets/sprites/tileset.png" id="1_iwx2j"]
+
+[sub_resource type="GDScript" id="GDScript_iwx2j"]
+script/source = "extends StaticBody2D
+
+@export var break_delay: float = 0.7  # Thời gian (s) trước khi platform biến mất
+
+var time_counter: float = 0.0
+
+func _ready() -> void:
+	# Ban đầu tắt process, chỉ bật khi có va chạm
+	set_process(false)
+	$Timer.one_shot = true
+	
+
+
+func _process(delta: float) -> void:
+	# Nếu đã bật process, thì platform sẽ rung lắc lên xuống
+	time_counter += delta
+	# Giả sử bạn dùng Sprite2D để hiển thị tile, đổi tên node nếu khác
+	$Sprite2D.position.y = sin(time_counter * 10.0) * 2.0  # tốc độ*10, biên độ 2px
+
+
+func _on_area_body_entered(body: Node) -> void:
+	# Bất cứ body nào chạm vào Area2D cũng sẽ kích hoạt
+	# (nếu bạn muốn loại trừ ví dụ shield thì check body.is_in_group(\"shield\")...)
+	set_process(true)
+	$Timer.start(break_delay)
+
+
+func _on_timer_timeout() -> void:
+	# Khi Timer timeout thì xóa platform
+	queue_free()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jlo13"]
+size = Vector2(78, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xpp2p"]
+size = Vector2(78, 5)
+
+[node name="trap" type="StaticBody2D"]
+script = SubResource("GDScript_iwx2j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2, 3)
+texture = ExtResource("1_iwx2j")
+region_enabled = true
+region_rect = Rect2(76, 62, 86, 11)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 2)
+shape = SubResource("RectangleShape2D_jlo13")
+one_way_collision = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 255
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, -4.5)
+shape = SubResource("RectangleShape2D_xpp2p")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
